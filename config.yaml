@@ -1,0 +1,25 @@
+# shortsync config
+#
+# anyapplication: You can put any name you would like, this is used
+#                 to load the config of a specific application.
+#   configpath: This designates where the source command is to be appended.
+#   sourceconf: This is the format of the source command keywords are $path$.
+#   outputpath: Where would you like to store the shortcut file.
+#   outputformat: What format would you like the shortcut file in,
+#                 keywords are $aliases$, $files$, $folders$ each
+#                 keywords relates to which shortcut file to output.
+#   aliasformat: What format makes an alias to a command,
+#                keywords are $short$, $cmd$.
+#   filesformat: What format makes an alias to open a specific file,
+#                keywords are $short$, $path$.
+#   foldersformat: What format makes an alias to navigate to a specific folder,
+#                  keywords are $short$, $path$.
+
+bash:
+    configpath: "~/.bashrc"
+    sourceconf: "source $path$"
+    outputpath: "$HOME/.config/shortsync/shortcut-files/bash_shortcuts"
+    outputformat: "# alias shortcuts\n$aliases$\n# file shortcuts\n$files$\n# folder shortcuts\n$folders$\n"
+    aliasformat: "alias $short$=\"$cmd$\""
+    filesformat: "alias $short$=\"$EDITOR $path$\""
+    foldersformat: "alias $short$=\"cd $path$\""

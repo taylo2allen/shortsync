@@ -1,0 +1,75 @@
+.Dd 7/31/22
+.Dt shortsync 1
+.Os Darwin
+.Sh NAME
+.Nm shortsync
+.Nd Sync alias, file, and folder shortcuts.
+.Sh SYNOPSIS
+.Nm
+.Op Fl acfF -hw
+.Op Fl a|--alias-shortcuts
+.Op Fl c|--config
+.Op Fl f|--file-shortcuts
+.Op Fl F|--folder-shortcuts
+.Op " Ar path "
+.Op Fl h|--help
+.Op Fl w|--write
+.Sh DESCRIPTION
+.Nm
+a program that creates and syncs: alias, file, and folder shortcuts between multiple applications.
+.Pp
+
+A list of flags and their descriptions:
+.Bl -tag -width -indent
+.It Fl a|--alias-shortcuts " Ar path "
+Load another alias shortcut file given the path.
+.It Fl c|--config " Ar path "
+Load another config given the path.
+.It Fl f|--file-shortcuts " Ar path "
+Load another file shortcut file given the path.
+.It Fl F|--folder-shortcuts " Ar path "
+Load another folder shortcut file given the path.
+.It Fl h|--help
+Print the help message.
+.It Fl w|--write
+Appends the source command field to the specified config file.
+.El
+.Pp
+.Sh EXAMPLES
+.Bl -tag -width -indent
+.It
+.Nm
+:
+.It
+By default the output is printed to stdout on a dryrun.
+.It
+.Nm
+-w:
+.It
+Takes the aliasformat, filesformat, and foldersformat field from the config file
+.It
+and outputs the results to file specified in the outputpath field. Once it is done
+.It
+printing the shortcut files to the correct files with the relative formats applied,
+.It
+then the source command is appended to the end of the applications config file.
+.El
+.Sh FILES
+.Bl -tag -width -indent
+.It Pa /usr/local/bin/shortsync
+The
+.Nm
+binary.
+.It Pa $HOME/.config/shortcut-configs/
+Directory contains the files that defines the alias, file, and folder shortcut files.
+.It Pa $HOME/.config/config.yaml/
+Default
+.Nm
+config.
+.El
+.Sh ISSUES
+Report bugs and issues to <https://github.com/taylo2allen/shortsync/issues>.
+.Sh AUTHOR
+Written and Maintained by Taylor Allen
+.Sh LICENSE
+MIT License 2022: Found at <https://mit-license.org>

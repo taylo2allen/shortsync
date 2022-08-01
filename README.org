@@ -1,0 +1,60 @@
+#+TITLE: ShortSync
+#+AUTHOR: Taylor Allen
+
+* DESCRIPTION
+shortsync is a program that creates and manages: alias, file, and folder shortcuts between multiple applications.
+
+* Usage
+** -h, --help
+Print this help message.
+** -c, --config
+Load another config given the path.
+** -w, --write
+Appends the source command field to the specified config file.
+** -a, --alias-shortcuts "PATH"
+Load another alias shortcut file given the path.
+** -f, --file-shortcuts "PATH"
+Load another file shortcut file given the path.
+** -F, --folder-shortcuts "PATH"
+Load another folder shortcut file given the path.
+
+** Configuration
+#+begin_src conf
+# alias_shortcuts
+cll    cd;clear
+cls    clear
+#+end_src
+
+#+begin_src conf
+# folder_shortcuts
+H       /home/taylorallen
+hD      ~/Desktop
+#+end_src
+
+#+begin_src conf
+# file_shortcuts
+fA   ~/.config/shortsync/shortcut-configs/alias_shortcuts.conf
+ff   ~/.config/shortsync/shortcut-configs/file_shortcuts.conf
+fF   ~/.config/shortsync/shortcut-configs/folder_shortcuts.conf
+#+end_src
+
+#+begin_src yaml
+# shortsync config
+bash:
+    configpath: "~/.bashrc"
+    sourceconf: "source $path$"
+    outputpath: "$HOME/.config/shortsync/shortcut-files/bash_shortcuts"
+    outputformat: "# alias shortcuts\n$aliases$\n# file shortcuts\n$files$\n# folder shortcuts\n$folders$\n"
+    aliasformat: "alias $short$=\"$cmd$\""
+    filesformat: "alias $short$=\"$EDITOR $path$\""
+    foldersformat: "alias $short$=\"cd $path$\""
+
+qutebrowser:
+    configpath: "$HOME/.config/qutebrowser/config.py"
+    sourceconf: "config.source('$path$')"
+    outputpath: "$HOME/.config/shortsync/shortcut-files/qutebrowser_shortcuts.py"
+    outputformat: "## folder shortcuts\n$folders$"
+    aliasformat: ""
+    filesformat: ""
+    foldersformat: "config.bind(\";$short$\", \"set downloads.location.directory $path$\""
+#+end_src
