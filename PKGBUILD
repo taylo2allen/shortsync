@@ -1,5 +1,6 @@
 # Maintainer: Taylor Allen
 pkgname=shortsync-git
+_pkgname=shortsync-git
 pkgver=1
 pkgrel=1
 epoch=
@@ -25,22 +26,22 @@ md5sums=('SKIP')
 validpgpkeys=()
 
 pkgver() {
-	cd ${pkgdir}
+	cd "${_pkgname}"
 	printf "1.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
-	cd ${pkgdir}
+	cd ${_pkgname}
 	make
 }
 
 package() {
-	cd ${pkgdir}
-	make clean
-	install -CDm755 shortcut-files/* "${pkgdir}/$HOME/.config/${pkgname}/shortcut-files"
-	install -CDm755 config.yaml "${pkgdir}/$HOME/.config/${pkgname}/config.yaml"
-	install -Dm755 bin/${pkgname} "${pkgdir}/usr/local/bin/${pkgname}"
-	install -Dm644 ${pkgname}.1 "${pkgdir}/usr/share/man/man1/${pkgname}.1"
-	install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-	install -Dm644 README.org "${pkgdir}/usr/share/doc/${pkgname}/README.org"
+	cd ${pkgname}
+	make install
+	# install -CDm755 shortcut-files/* "${pkgdir}/$HOME/.config/${pkgname}/shortcut-files"
+	# install -CDm755 config.yaml "${pkgdir}/$HOME/.config/${pkgname}/config.yaml"
+	# install -Dm755 bin/${pkgname} "${pkgdir}/usr/local/bin/${pkgname}"
+	# install -Dm644 ${pkgname}.1 "${pkgdir}/usr/share/man/man1/${pkgname}.1"
+	# install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+	# install -Dm644 README.org "${pkgdir}/usr/share/doc/${pkgname}/README.org"
 }
