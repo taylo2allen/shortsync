@@ -1,7 +1,6 @@
 # Maintainer: Taylor Allen
-pkgname=shortsync-git
-_pkgname=shortsync-git
-pkgver=1
+pkgname=shortsync
+pkgver=1.r6.bf2795a
 pkgrel=1
 epoch=
 pkgdesc="This application makes it easy to keep track of alias, file, and folder shortcuts across multiple applications and shells."
@@ -13,7 +12,7 @@ depends=()
 makedepends=('git' 'glibc' 'gcc-libs' 'yaml-cpp')
 checkdepends=()
 optdepends=('entr')
-provides=(shortsync)
+provides=('shortsync')
 conflicts=()
 replaces=()
 backup=()
@@ -26,22 +25,23 @@ md5sums=('SKIP')
 validpgpkeys=()
 
 pkgver() {
-	cd "${_pkgname}"
+	cd shortsync
 	printf "1.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
-	cd ${_pkgname}
+	cd shortsync
 	make
 }
 
 package() {
-	cd ${pkgname}
-	make install
-	# install -CDm755 shortcut-files/* "${pkgdir}/$HOME/.config/${pkgname}/shortcut-files"
-	# install -CDm755 config.yaml "${pkgdir}/$HOME/.config/${pkgname}/config.yaml"
-	# install -Dm755 bin/${pkgname} "${pkgdir}/usr/local/bin/${pkgname}"
-	# install -Dm644 ${pkgname}.1 "${pkgdir}/usr/share/man/man1/${pkgname}.1"
-	# install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-	# install -Dm644 README.org "${pkgdir}/usr/share/doc/${pkgname}/README.org"
+	cd shortsync
+	# mkdir -p $HOME/.config/shortsync/
+	# chmod 755 config/*
+	# cp -nru config/* -t /$HOME/.config/shortsync
+	install -CDm755 config/ "$pkgdir/$HOME/.config/shortsync/config/"
+	install -Dm755 bin/$pkgname "$pkgdir/usr/local/bin/$pkgname"
+	install -Dm644 $pkgname.1 "$pkgdir/usr/share/man/man1/$pkgname.1"
+	install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	install -Dm644 README.org "$pkgdir/usr/share/doc/$pkgname/README.org"
 }
