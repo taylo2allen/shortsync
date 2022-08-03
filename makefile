@@ -18,14 +18,13 @@ clean:
 	sudo rm -f /usr/local/bin/$(TARGET)
 
 install: clean
-	mkdir -p $(HOME)/.config/shortsync/
-	cp -nru config/* -t /$(HOME)/.config/shortsync
 	chmod 755 config/* bin/$(TARGET)
 	chmod 644 LICENSE README.org $(TARGET).1
-	sudo cp -f $(TARGET).1 /usr/share/man/man1
-	sudo cp -f LICENSE /usr/share/licenses/$(TARGET)
-	sudo cp -f README.org /usr/share/doc/$(TARGET)
-	sudo cp -f bin/$(TARGET) /usr/local/bin
+	mkdir -p $(HOME)/.config/shortsync/ && cp -nru config/* -t $(HOME)/.config/shortsync/
+	sudo cp -f $(TARGET).1 -t /usr/share/man/man1
+	sudo mkdir -p /usr/share/licenses/$(TARGET) && sudo cp -f LICENSE -t /usr/share/licenses/$(TARGET)
+	sudo mkdir -p /usr/share/doc/$(TARGET) && sudo cp -f README.org -t /usr/share/doc/$(TARGET)
+	sudo cp -f bin/$(TARGET) -t /usr/local/bin
 
 uninstall:
 	sudo rm -rf ~/.config/shortsync
