@@ -21,7 +21,7 @@ clean:
 	sudo rm -f /usr/share/man/man1/$(TARGET).1
 
 install: clean
-	chmod 755 config/* bin/$(TARGET)
+	chmod 755 bin/$(TARGET)
 	chmod 644 LICENSE README.org $(TARGET).1
 	mkdir -p $(HOME)/.config/shortsync/ && cp -nru config/* -t $(HOME)/.config/shortsync/
 	sudo cp -f $(TARGET).1 -t /usr/share/man/man1

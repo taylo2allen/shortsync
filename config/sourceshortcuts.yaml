@@ -1,0 +1,4 @@
+shortcutfiles:
+    aliasshortcut: "$HOME/.config/shortsync/shortcut-configs/alias_shortcuts.conf"
+    fileshortcut: "$HOME/.config/shortsync/shortcut-configs/file_shortcuts.conf"
+    foldershortcut: "$HOME/.config/shortsync/shortcut-configs/folder_shortcuts.conf"

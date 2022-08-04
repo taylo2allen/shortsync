@@ -12,14 +12,47 @@
 int main(int argc, char **argv) {
   std::string homedir = getenv("HOME");
   std::string configdir = homedir + "/.config/shortsync/config.yaml";
-  std::string aliasesdir =
-      homedir + "/.config/shortsync/shortcut-configs/alias_shortcuts.conf";
-  std::string filesdir =
-      homedir + "/.config/shortsync/shortcut-configs/file_shortcuts.conf";
-  std::string foldersdir =
-      homedir + "/.config/shortsync/shortcut-configs/folder_shortcuts.conf";
+  std::string shortcutsdir =
+      homedir + "/.config/shortsync/sourceshortcuts.yaml";
+  std::string aliasesdir;
+  std::string filesdir;
+  std::string foldersdir;
+
   std::regex commentregex("^(.*#.*)$");
   std::regex homeregex("^[$~](HOME)?");
+
+  const YAML::Node &shortcutfiles = YAML::LoadFile(shortcutsdir);
+
+  std::cout << shortcutfiles << "\n\n";
+
+  for (YAML::const_iterator shortcut = shortcutfiles.begin();
+       shortcut != shortcutfiles.end(); ++shortcut) {
+
+    if (shortcut->second["aliasshortcut"].as<std::string>() != "") {
+      aliasesdir = shortcut->second["aliasshortcut"].as<std::string>();
+    } else {
+      aliasesdir =
+          homedir + "/.config/shortsync/shortcut-configs/alias_shortcuts.conf";
+    }
+
+    if (shortcut->second["fileshortcut"].as<std::string>() != "") {
+      filesdir = shortcut->second["fileshortcut"].as<std::string>();
+    } else {
+      filesdir =
+          homedir + "/.config/shortsync/shortcut-configs/file_shortcuts.conf";
+    }
+
+    if (shortcut->second["fileshortcut"].as<std::string>() != "") {
+      foldersdir = shortcut->second["foldershortcut"].as<std::string>();
+    } else {
+      foldersdir =
+          homedir + "/.config/shortsync/shortcut-configs/folder_shortcuts.conf";
+    }
+  }
+
+  aliasesdir = std::regex_replace(aliasesdir, homeregex, homedir);
+  filesdir = std::regex_replace(filesdir, homeregex, homedir);
+  foldersdir = std::regex_replace(foldersdir, homeregex, homedir);
 
   bool writetofile = false;
   bool printstdout = true;
@@ -180,7 +213,7 @@ int main(int argc, char **argv) {
     if (printstdout && !writetofile) {
       std::cout << app->first << ":\nconfig file: " << configpath
                 << "\noutput file: " << outputpath
-                << "\nunformatted source command: " << sourcecmdstr
+                << "\n\nunformatted source command: " << sourcecmdstr
                 << "\nformatted source command: " << sourcecmd << std::endl;
     }
 
@@ -189,8 +222,9 @@ int main(int argc, char **argv) {
       std::string aliases, aliasstrbuf;
       std::smatch aliasmatch;
       if (printstdout && !writetofile) {
-        std::cout << "unformatted aliases: " << app->second["aliasformat"]
-                  << "\nformatted aliases:\n";
+        std::cout << "\nunformatted alias shortcuts: "
+                  << app->second["aliasformat"]
+                  << "\nformatted alias shortcuts:\n";
       }
 
       std::string parsedalias;
@@ -217,8 +251,9 @@ int main(int argc, char **argv) {
       std::smatch filematch;
 
       if (printstdout && !writetofile) {
-        std::cout << "unformatted files: " << app->second["filesformat"]
-                  << "\nformatted files:\n";
+        std::cout << "unformatted file shortcuts: "
+                  << app->second["filesformat"]
+                  << "\nformatted file shortcuts:\n";
       }
 
       std::string parsedfile;
@@ -243,8 +278,9 @@ int main(int argc, char **argv) {
       std::string folders, folderstrbuf;
       std::smatch foldermatch;
       if (printstdout && !writetofile) {
-        std::cout << "unformatted folders: " << app->second["foldersformat"]
-                  << "\nformatted folders:\n";
+        std::cout << "unformatted folder shortcuts: "
+                  << app->second["foldersformat"]
+                  << "\nformatted folder shortcuts:\n";
       }
 
       std::string parsedfolder;
