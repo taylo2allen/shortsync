@@ -26,20 +26,19 @@ int main(int argc, char **argv) {
   for (int i = 1; i < argc; i++) {
     if (std::strcmp(argv[i], "-h") == 0 ||
         std::strcmp(argv[i], "--help") == 0) {
-      std::cout
-          << "shortsync [-OPTION] \"PATH\"\n\t-h, --help:\t\t\t\t\t\tPrint "
-             "this "
-             "help.\n\t-c, --config:\t\t\t\t\tLoad another config given the "
-             "path.\n\t-w, --write:\t\t\t\t\tAppends the source command "
-             "field "
-             "to "
-             "the specified config file.\n\t-a, --alias-shortcuts "
-             "\"PATH\":\tLoad another alias shortcut file given the "
-             "path.\n\t-f, --file-shortcuts \"PATH\":\tLoad another file "
-             "shortcut file given the path.\n\t-F, --folder-shortcuts "
-             "\"PATH\":\tLoad another folder shortcut file given the "
-             "path.\n\n"
-             "Visit the manpage for more information.";
+      std::cout << "shortsync [-OPTION] \"PATH\"\n\t-h, --help:\t\t\tPrint "
+                   "this "
+                   "help.\n\t-c, --config:\t\t\tLoad another config given the "
+                   "path.\n\t-w, --write:\t\t\tAppends the source command "
+                   "field "
+                   "to "
+                   "the specified config file.\n\t-a, --alias-shortcuts "
+                   "\"PATH\":\tLoad another alias shortcut file given the "
+                   "path.\n\t-f, --file-shortcuts \"PATH\":\tLoad another file "
+                   "shortcut file given the path.\n\t-F, --folder-shortcuts "
+                   "\"PATH\":\tLoad another folder shortcut file given the "
+                   "path.\n\n"
+                   "Visit the manpage for more information.";
       writetofile = false;
       printstdout = false;
     } else if (std::strcmp(argv[i], "-c") == 0 ||
@@ -126,7 +125,7 @@ int main(int argc, char **argv) {
     std::regex sourceregex("([a-zA-z]*) *(.*)");
 
     std::string configstr = app->second["configpath"].as<std::string>();
-    std::string sourcecmdstr = app->second["sourceconf"].as<std::string>();
+    std::string sourcecmdstr = app->second["sourcecmd"].as<std::string>();
     std::string outputfilestr = app->second["outputpath"].as<std::string>();
     outputstr = app->second["outputformat"].as<std::string>();
     std::string configpath = std::regex_replace(configstr, homeregex, homedir);
@@ -164,9 +163,9 @@ int main(int argc, char **argv) {
       std::cout << "Error while loading " << app->first
                 << " missing required fields configpath.";
       return 0;
-    } else if (app->second["sourceconf"].as<std::string>() == "") {
+    } else if (app->second["sourcecmd"].as<std::string>() == "") {
       std::cout << "Error while loading " << app->first
-                << " missing required fields sourceconf.";
+                << " missing required fields sourcecmd.";
       return 0;
     } else if (!iConfig.is_open()) {
       std::cout << "Error while loading " << app->first
@@ -231,7 +230,7 @@ int main(int argc, char **argv) {
         filestrbuf =
             std::regex_replace(fileformatstr, shortcutregex, filematch.str(1));
         files = std::regex_replace(filestrbuf, replaceregex, filematch.str(2));
-        filesstr = filesstr + files;
+        filesstr = filesstr + files + "\n";
       }
       if (printstdout && !writetofile) {
         std::cout << filesstr << std::endl;

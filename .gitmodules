@@ -1,0 +1,3 @@
+[submodule "shortsync-git"]
+	path = shortsync-git
+	url = ssh://aur@aur.archlinux.org/shortsync-git.git

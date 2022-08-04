@@ -6,12 +6,12 @@
 .Nd Sync alias, file, and folder shortcuts.
 .Sh SYNOPSIS
 .Nm
-.Op Fl acfF -hw
+.Op Fl acfF hw
 .Op Fl a|--alias-shortcuts
 .Op Fl c|--config
 .Op Fl f|--file-shortcuts
 .Op Fl F|--folder-shortcuts
-.Op " Ar path "
+.Op " path "
 .Op Fl h|--help
 .Op Fl w|--write
 .Sh DESCRIPTION
@@ -21,13 +21,13 @@ a program that creates and syncs: alias, file, and folder shortcuts between mult
 
 A list of flags and their descriptions:
 .Bl -tag -width -indent
-.It Fl a|--alias-shortcuts " Ar path "
+.It Fl a|--alias-shortcuts\ filepath
 Load another alias shortcut file given the path.
-.It Fl c|--config " Ar path "
+.It Fl c|--config\ filepath
 Load another config given the path.
-.It Fl f|--file-shortcuts " Ar path "
+.It Fl f|--file-shortcuts\ filepath
 Load another file shortcut file given the path.
-.It Fl F|--folder-shortcuts " Ar path "
+.It Fl F|--folder-shortcuts\ filepath
 Load another folder shortcut file given the path.
 .It Fl h|--help
 Print the help message.

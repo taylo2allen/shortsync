@@ -16,6 +16,9 @@ $(TARGET): $(TARGET).cpp
 
 clean:
 	sudo rm -f /usr/local/bin/$(TARGET)
+	sudo rm -f /usr/share/licenses/$(TARGET)/LICENSE
+	sudo rm -f /usr/share/doc/$(TARGET)/README.org
+	sudo rm -f /usr/share/man/man1/$(TARGET).1
 
 install: clean
 	chmod 755 config/* bin/$(TARGET)
@@ -26,9 +29,5 @@ install: clean
 	sudo mkdir -p /usr/share/doc/$(TARGET) && sudo cp -f README.org -t /usr/share/doc/$(TARGET)
 	sudo cp -f bin/$(TARGET) -t /usr/local/bin
 
-uninstall:
+uninstall: clean
 	sudo rm -rf ~/.config/shortsync
-	sudo rm -f /usr/local/bin/$(TARGET)
-	sudo rm -f /usr/share/licenses/$(TARGET)/LICENSE
-	sudo rm -f /usr/share/doc/$(TARGET)/README.org
-	sudo rm -f /usr/share/man/man1/$(TARGET).1
