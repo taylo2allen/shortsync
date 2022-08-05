@@ -1,5 +1,3 @@
-// #include <cstdint>
-// #include <cstdio>
 #include <cstring>
 #include <fstream>
 #include <ios>
@@ -21,12 +19,12 @@ int main(int argc, char **argv) {
   std::regex commentregex("^(.*#.*)$");
   std::regex homeregex("^[$~](HOME)?");
 
-  const YAML::Node &shortcutfiles = YAML::LoadFile(shortcutsdir);
+  const YAML::Node &shortcutf = YAML::LoadFile(shortcutsdir);
 
-  std::cout << shortcutfiles << "\n\n";
+  // std::cout << shortcutfiles << "\n\n";
 
-  for (YAML::const_iterator shortcut = shortcutfiles.begin();
-       shortcut != shortcutfiles.end(); ++shortcut) {
+  for (YAML::const_iterator shortcut = shortcutf.begin();
+       shortcut != shortcutf.end(); ++shortcut) {
 
     if (shortcut->second["aliasshortcut"].as<std::string>() != "") {
       aliasesdir = shortcut->second["aliasshortcut"].as<std::string>();
@@ -170,26 +168,30 @@ int main(int argc, char **argv) {
     std::ofstream sourcefile;
     sourcefile.open(configpath, std::ios::app);
 
+    std::ofstream shortcutfile;
+    if (writetofile) {
+      shortcutfile.open(outputpath);
+    }
+
     std::ifstream iConfig;
     std::string iConfigContents;
     iConfig.open(configpath);
 
     bool writesrc = true;
-    // bool writesrc;
+    // bool writesrc = false;
     std::regex configregex(sourcecmd);
     while (std::getline(iConfig, iConfigContents)) {
       if (std::regex_match(iConfigContents, configregex)) {
         writesrc = false;
+        // break;
       }
+
+      // if (iConfig.eof())
+      // writesrc = true;
     }
 
     if (writesrc && writetofile) {
       sourcefile << sourcecmd;
-    }
-
-    std::ofstream shortcutfile;
-    if (writetofile) {
-      shortcutfile.open(outputpath);
     }
 
     if (app->second["configpath"].as<std::string>() == "") {
@@ -202,11 +204,11 @@ int main(int argc, char **argv) {
       return 0;
     } else if (!iConfig.is_open()) {
       std::cout << "Error while loading " << app->first
-                << "\nconfig: invalid path.";
+                << " config, an invalid path was loaded.";
       return 0;
     } else if (!shortcutfile.is_open() && writetofile) {
       std::cout << "Error while loading " << app->first
-                << "\noutputpath invalid path.";
+                << " outputpath field, an invalid path was loaded.";
       return 0;
     }
 
