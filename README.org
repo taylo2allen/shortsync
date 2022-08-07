@@ -4,6 +4,26 @@
 * DESCRIPTION
 shortsync is a program that creates and manages: alias, file, and folder shortcuts between multiple applications.
 
+* Installation
+** AUR
+To install from the AUR install the package shortsync-git.
+#+begin_src shell
+yay -S shortsync-git
+yaourt -S shortsync-git
+#+end_src
+** Pacman
+To install with pacman download the latest release then run the command:
+#+begin_src shell
+pacman -U shortsync-git-ver#-x86_64.pkg.tar.zst
+#+end_src
+** From Source
+To install from source run the command:
+#+begin_src shell
+git clone https://github.com/taylo2allen/shortsync.git
+cd shortsync
+make install
+#+end_src
+
 * Usage
 ** -h, --help
 Print this help message.
@@ -21,14 +41,14 @@ Load another folder shortcut file given the path.
 ** Configuration
 #+begin_src conf
 # alias_shortcuts
-cll    cd;clear
-cls    clear
+s     shortsync
+sh    shortsync -h
 #+end_src
 
 #+begin_src conf
 # folder_shortcuts
-H       /home/taylorallen
-hD      ~/Desktop
+hcS     $HOME/.config/shortsync
+hcsC    $HOME/.config/shortsync/shortcut-configs
 #+end_src
 
 #+begin_src conf
@@ -40,6 +60,32 @@ fF   ~/.config/shortsync/shortcut-configs/folder_shortcuts.conf
 
 #+begin_src yaml
 # shortsync config
+#
+# shortcuts: Source all the shortcut files by default accepts any plain text file with # comments.
+#     alias-shortcuts: Source the alias shortcut file.
+#     file-shortcuts: Source the file shortcut file.
+#     folder-shortcuts: Source the folder shortcut file.
+
+# anyapplication: You can put any name you would like, this is used
+#                 to load the config of a specific application.
+#   configpath: This designates where the source command is to be appended.
+#   sourcecmd: This is the format of the source command keywords are $path$.
+#   outputpath: Where would you like to store the shortcut file.
+#   outputformat: What format would you like the shortcut file in,
+#                 keywords are $aliases$, $files$, $folders$ each
+#                 keywords relates to which shortcut file to output.
+#   aliasformat: What format makes an alias to a command,
+#                keywords are $short$, $cmd$.
+#   filesformat: What format makes an alias to open a specific file,
+#                keywords are $short$, $path$.
+#   foldersformat: What format makes an alias to navigate to a specific folder,
+#                  keywords are $short$, $path$.
+
+shortcuts:
+    alias-shortcuts: "$HOME/.config/shortsync/shortcut-configs/alias_shortcuts.conf"
+    file-shortcuts: "$HOME/.config/shortsync/shortcut-configs/file_shortcuts.conf"
+    folder-shortcuts: "$HOME/.config/shortsync/shortcut-configs/folder_shortcuts.conf"
+
 bash:
     configpath: "~/.bashrc"
     sourceconf: "source $path$"
@@ -48,13 +94,4 @@ bash:
     aliasformat: "alias $short$=\"$cmd$\""
     filesformat: "alias $short$=\"$EDITOR $path$\""
     foldersformat: "alias $short$=\"cd $path$\""
-
-qutebrowser:
-    configpath: "$HOME/.config/qutebrowser/config.py"
-    sourceconf: "config.source('$path$')"
-    outputpath: "$HOME/.config/shortsync/shortcut-files/qutebrowser_shortcuts.py"
-    outputformat: "## folder shortcuts\n$folders$"
-    aliasformat: ""
-    filesformat: ""
-    foldersformat: "config.bind(\";$short$\", \"set downloads.location.directory $path$\""
 #+end_src

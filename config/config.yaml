@@ -1,5 +1,10 @@
 # shortsync config
 #
+# shortcuts: Source all the shortcut files by default accepts any plain text file with # comments.
+#     alias-shortcuts: Source the alias shortcut file.
+#     file-shortcuts: Source the file shortcut file.
+#     folder-shortcuts: Source the folder shortcut file.
+
 # anyapplication: You can put any name you would like, this is used
 #                 to load the config of a specific application.
 #   configpath: This designates where the source command is to be appended.
@@ -14,6 +19,11 @@
 #                keywords are $short$, $path$.
 #   foldersformat: What format makes an alias to navigate to a specific folder,
 #                  keywords are $short$, $path$.
+
+shortcuts:
+    alias-shortcuts: "$HOME/.config/shortsync/shortcut-configs/alias_shortcuts.conf"
+    file-shortcuts: "$HOME/.config/shortsync/shortcut-configs/file_shortcuts.conf"
+    folder-shortcuts: "$HOME/.config/shortsync/shortcut-configs/folder_shortcuts.conf"
 
 bash:
     configpath: "~/.bashrc"

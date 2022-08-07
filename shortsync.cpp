@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <cstring>
 #include <fstream>
 #include <ios>
@@ -10,8 +11,6 @@
 int main(int argc, char **argv) {
   std::string homedir = getenv("HOME");
   std::string configdir = homedir + "/.config/shortsync/config.yaml";
-  std::string shortcutsdir =
-      homedir + "/.config/shortsync/sourceshortcuts.yaml";
   std::string aliasesdir;
   std::string filesdir;
   std::string foldersdir;
@@ -19,38 +18,40 @@ int main(int argc, char **argv) {
   std::regex commentregex("^(.*#.*)$");
   std::regex homeregex("^[$~](HOME)?");
 
-  const YAML::Node &shortcutf = YAML::LoadFile(shortcutsdir);
+  const YAML::Node &shortcutconfigs = YAML::LoadFile(configdir);
 
-  // std::cout << shortcutfiles << "\n\n";
+  if (shortcutconfigs["shortcuts"]["alias-shortcuts"].as<std::string>() != "") {
+    aliasesdir =
+        shortcutconfigs["shortcuts"]["alias-shortcuts"].as<std::string>();
+  } else {
+    aliasesdir =
+        homedir + "/.config/shortsync/shortcut-configs/alias_shortcuts.conf";
+  }
 
-  for (YAML::const_iterator shortcut = shortcutf.begin();
-       shortcut != shortcutf.end(); ++shortcut) {
+  if (shortcutconfigs["shortcuts"]["file-shortcuts"].as<std::string>() != "") {
+    filesdir = shortcutconfigs["shortcuts"]["file-shortcuts"].as<std::string>();
+  } else {
+    filesdir =
+        homedir + "/.config/shortsync/shortcut-configs/file_shortcuts.conf";
+  }
 
-    if (shortcut->second["aliasshortcut"].as<std::string>() != "") {
-      aliasesdir = shortcut->second["aliasshortcut"].as<std::string>();
-    } else {
-      aliasesdir =
-          homedir + "/.config/shortsync/shortcut-configs/alias_shortcuts.conf";
-    }
-
-    if (shortcut->second["fileshortcut"].as<std::string>() != "") {
-      filesdir = shortcut->second["fileshortcut"].as<std::string>();
-    } else {
-      filesdir =
-          homedir + "/.config/shortsync/shortcut-configs/file_shortcuts.conf";
-    }
-
-    if (shortcut->second["fileshortcut"].as<std::string>() != "") {
-      foldersdir = shortcut->second["foldershortcut"].as<std::string>();
-    } else {
-      foldersdir =
-          homedir + "/.config/shortsync/shortcut-configs/folder_shortcuts.conf";
-    }
+  if (shortcutconfigs["shortcuts"]["file-shortcuts"].as<std::string>() != "") {
+    foldersdir =
+        shortcutconfigs["shortcuts"]["folder-shortcuts"].as<std::string>();
+  } else {
+    foldersdir =
+        homedir + "/.config/shortsync/shortcut-configs/folder_shortcuts.conf";
   }
 
   aliasesdir = std::regex_replace(aliasesdir, homeregex, homedir);
   filesdir = std::regex_replace(filesdir, homeregex, homedir);
   foldersdir = std::regex_replace(foldersdir, homeregex, homedir);
+
+  std::string yamlstring = YAML::key_to_string(shortcutconfigs);
+  std::regex yamlregex(
+      ".*(shortcuts|alias-shortcuts|file-shortcuts|folder-shortcuts):.*");
+  yamlstring = std::regex_replace(yamlstring, yamlregex, "");
+  const YAML::Node config = YAML::Load(yamlstring);
 
   bool writetofile = false;
   bool printstdout = true;
@@ -146,7 +147,7 @@ int main(int argc, char **argv) {
     folderstr = folderstr + iFolderContents + "\n";
   }
 
-  const YAML::Node &config = YAML::LoadFile(configdir);
+  // const YAML::Node &config = YAML::LoadFile(configdir);
 
   for (YAML::const_iterator app = config.begin(); app != config.end(); ++app) {
     std::string aliasesstr, filesstr, foldersstr, outputstr;
@@ -183,11 +184,7 @@ int main(int argc, char **argv) {
     while (std::getline(iConfig, iConfigContents)) {
       if (std::regex_match(iConfigContents, configregex)) {
         writesrc = false;
-        // break;
       }
-
-      // if (iConfig.eof())
-      // writesrc = true;
     }
 
     if (writesrc && writetofile) {
