@@ -23,7 +23,7 @@ clean:
 install: clean
 	chmod 755 bin/$(TARGET)
 	chmod 644 LICENSE README.org $(TARGET).1
-	mkdir -p $(HOME)/.config/shortsync/ && cp -nru config/* -t $(HOME)/.config/shortsync/
+	mkdir -p $(HOME)/.config/shortsync/shortcut-files && cp -nru config/* -t $(HOME)/.config/shortsync/
 	sudo cp -f $(TARGET).1 -t /usr/share/man/man1
 	sudo mkdir -p /usr/share/licenses/$(TARGET) && sudo cp -f LICENSE -t /usr/share/licenses/$(TARGET)
 	sudo mkdir -p /usr/share/doc/$(TARGET) && sudo cp -f README.org -t /usr/share/doc/$(TARGET)

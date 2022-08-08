@@ -147,8 +147,6 @@ int main(int argc, char **argv) {
     folderstr = folderstr + iFolderContents + "\n";
   }
 
-  // const YAML::Node &config = YAML::LoadFile(configdir);
-
   for (YAML::const_iterator app = config.begin(); app != config.end(); ++app) {
     std::string aliasesstr, filesstr, foldersstr, outputstr;
     std::regex commentregex("^(.*#.*)$");
@@ -171,6 +169,7 @@ int main(int argc, char **argv) {
 
     std::ofstream shortcutfile;
     if (writetofile) {
+      std::ofstream shortcutfile;
       shortcutfile.open(outputpath);
     }
 
