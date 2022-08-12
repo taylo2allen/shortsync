@@ -169,8 +169,12 @@ int main(int argc, char **argv) {
 
     std::ofstream shortcutfile;
     if (writetofile) {
-      std::ofstream shortcutfile;
       shortcutfile.open(outputpath);
+      if (!shortcutfile.is_open() && writetofile) {
+        std::cout << "Error while loading " << app->first
+                  << " outputpath field, an invalid path was loaded.";
+        return 0;
+      }
     }
 
     std::ifstream iConfig;
@@ -201,10 +205,6 @@ int main(int argc, char **argv) {
     } else if (!iConfig.is_open()) {
       std::cout << "Error while loading " << app->first
                 << " config, an invalid path was loaded.";
-      return 0;
-    } else if (!shortcutfile.is_open() && writetofile) {
-      std::cout << "Error while loading " << app->first
-                << " outputpath field, an invalid path was loaded.";
       return 0;
     }
 
