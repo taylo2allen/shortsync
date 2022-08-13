@@ -1,38 +1,40 @@
-<!-- #+TITLE: ShortSync -->
-<!-- #+AUTHOR: Taylor Allen -->
+# ShortSync
+[![ShortSync](https://img.shields.io/badge/ShortSync-a_program_than_creates_and_manages:_alias,_file,_and_folder_shortcuts_between_multiple_applications.-9cf)](https://github.com/taylo2allen/shortsync/)
+
 [![GitHub issues](https://img.shields.io/github/issues/taylo2allen/shortsync)](https://github.com/taylo2allen/shortsync/issues)
-# DESCRIPTION
+[![GitHub forks](https://img.shields.io/github/forks/taylo2allen/shortsync)](https://github.com/taylo2allen/shortsync/network)
+[![GitHub stars](https://img.shields.io/github/stars/taylo2allen/shortsync)](https://github.com/taylo2allen/shortsync/stargazers)
+[![GitHub license](https://img.shields.io/github/license/taylo2allen/shortsync)](https://github.com/taylo2allen/shortsync/blob/main/LICENSE)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-9cf)](https://www.paypal.com/donate/?business=2PG2WQZS6VL7W&no_recurring=0&item_name=Just+a+freelance+programmer+trying+to+make+a+living%2C+everything+is+appreciated+Thank+You+for+the+donation.&currency_code=USD)
+
+## Summary
 shortsync is a program that creates and manages: alias, file, and folder shortcuts between multiple applications.
 
-# Installation
-## AUR
+## Installation
+### AUR
 To install from the AUR install the package shortsync-git.
-``` shell
-yay -S shortsync-git
-yaourt -S shortsync-git
-```
-## Pacman
+
+### Pacman
 To install with pacman download the latest release then run the command:
-``` shell
-pacman -U shortsync-git-ver#-x86_64.pkg.tar.zst
+```bash
+pacman -U shortsync-git-0.1.0-1-x86_64.pkg.tar.zst
 ```
-## From Source
+### From Source
 To install from source run the command:
-``` shell
+```bash
 git clone https://github.com/taylo2allen/shortsync.git
 cd shortsync
 make install
 ```
-
-# Usage
-## -h, --help
+## Usage
+### -h, --help
 Print this help message.
-## -c, --config "PATH"
+### -c, --config "PATH"
 Load another config given the path.
-## -w, --write
+### -w, --write
 Appends the source command field to the specified config file.
 
-## Configuration
+### Configuration
 ``` conf
 # alias_shortcuts
 s     shortsync
