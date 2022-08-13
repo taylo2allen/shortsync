@@ -5,7 +5,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/taylo2allen/shortsync)](https://github.com/taylo2allen/shortsync/network)
 [![GitHub stars](https://img.shields.io/github/stars/taylo2allen/shortsync)](https://github.com/taylo2allen/shortsync/stargazers)
 [![GitHub license](https://img.shields.io/github/license/taylo2allen/shortsync)](https://github.com/taylo2allen/shortsync/blob/main/LICENSE)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-9cf)](https://www.paypal.com/donate/?business=2PG2WQZS6VL7W&no_recurring=0&item_name=Just+a+freelance+programmer+trying+to+make+a+living%2C+everything+is+appreciated+Thank+You+for+the+donation.&currency_code=USD)
+[![Donate](https://img.shields.io/badge/Donate-$$$-9cf)](https://linktr.ee/taylo2allen)
 
 ## Summary
 shortsync is a program that creates and manages: alias, file, and folder shortcuts between multiple applications.
