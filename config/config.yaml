@@ -1,6 +1,7 @@
 # shortsync config
 #
-# shortcuts: Source all the shortcut files by default accepts any plain text file with # comments.
+# shortcuts: Source the shortcut files, default format is
+#            any plain text file comment syntax is a #.
 #     alias-shortcuts: Source the alias shortcut file.
 #     file-shortcuts: Source the file shortcut file.
 #     folder-shortcuts: Source the folder shortcut file.
@@ -21,9 +22,9 @@
 #                  keywords are $short$, $path$.
 
 shortcuts:
-    alias-shortcuts: "$HOME/.config/shortsync/shortcut-configs/alias_shortcuts.conf"
-    file-shortcuts: "$HOME/.config/shortsync/shortcut-configs/file_shortcuts.conf"
-    folder-shortcuts: "$HOME/.config/shortsync/shortcut-configs/folder_shortcuts.conf"
+    alias-shortcuts: "$HOME/.config/shortsync-example/shortcut-configs/alias_shortcuts.conf"
+    file-shortcuts: "$HOME/.config/shortsync-example/shortcut-configs/file_shortcuts.conf"
+    folder-shortcuts: "$HOME/.config/shortsync-example/shortcut-configs/folder_shortcuts.conf"
 
 bash:
     configpath: "~/.bashrc"

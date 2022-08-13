@@ -18,6 +18,38 @@ int main(int argc, char **argv) {
   std::regex commentregex("^(.*#.*)$");
   std::regex homeregex("^[$~](HOME)?");
 
+  bool writetofile = false;
+  bool printstdout = true;
+  for (int i = 1; i < argc; i++) {
+    if (std::strcmp(argv[i], "-h") == 0 ||
+        std::strcmp(argv[i], "--help") == 0) {
+      std::cout << "shortsync [-OPTION] \"PATH\"\n\t-h, --help:\t\t\tPrint "
+                   "this "
+                   "help.\n\t-c, --config:\t\t\tLoad another config given the "
+                   "path.\n\t-w, --write:\t\t\tAppends the source command "
+                   "field "
+                   "to "
+                   "the specified config file.\n\t-a, --alias-shortcuts "
+                   "\"PATH\":\tLoad another alias shortcut file given the "
+                   "path.\n\t-f, --file-shortcuts \"PATH\":\tLoad another file "
+                   "shortcut file given the path.\n\t-F, --folder-shortcuts "
+                   "\"PATH\":\tLoad another folder shortcut file given the "
+                   "path.\n\n"
+                   "Visit the manpage for more information.";
+      writetofile = false;
+      printstdout = false;
+    } else if (std::strcmp(argv[i], "-c") == 0 ||
+               std::strcmp(argv[i], "--config") == 0) {
+      configdir = argv[i + 1];
+      configdir = std::regex_replace(configdir, homeregex, homedir);
+      continue;
+    } else if (std::strcmp(argv[i], "-w") == 0 ||
+               std::strcmp(argv[i], "--write") == 0) {
+      writetofile = true;
+      printstdout = false;
+    }
+  }
+
   const YAML::Node &shortcutconfigs = YAML::LoadFile(configdir);
 
   if (shortcutconfigs["shortcuts"]["alias-shortcuts"].as<std::string>() != "") {
@@ -52,49 +84,6 @@ int main(int argc, char **argv) {
       ".*(shortcuts|alias-shortcuts|file-shortcuts|folder-shortcuts):.*");
   yamlstring = std::regex_replace(yamlstring, yamlregex, "");
   const YAML::Node config = YAML::Load(yamlstring);
-
-  bool writetofile = false;
-  bool printstdout = true;
-  for (int i = 1; i < argc; i++) {
-    if (std::strcmp(argv[i], "-h") == 0 ||
-        std::strcmp(argv[i], "--help") == 0) {
-      std::cout << "shortsync [-OPTION] \"PATH\"\n\t-h, --help:\t\t\tPrint "
-                   "this "
-                   "help.\n\t-c, --config:\t\t\tLoad another config given the "
-                   "path.\n\t-w, --write:\t\t\tAppends the source command "
-                   "field "
-                   "to "
-                   "the specified config file.\n\t-a, --alias-shortcuts "
-                   "\"PATH\":\tLoad another alias shortcut file given the "
-                   "path.\n\t-f, --file-shortcuts \"PATH\":\tLoad another file "
-                   "shortcut file given the path.\n\t-F, --folder-shortcuts "
-                   "\"PATH\":\tLoad another folder shortcut file given the "
-                   "path.\n\n"
-                   "Visit the manpage for more information.";
-      writetofile = false;
-      printstdout = false;
-    } else if (std::strcmp(argv[i], "-c") == 0 ||
-               std::strcmp(argv[i], "--config") == 0) {
-      configdir = argv[i + 0];
-      configdir = std::regex_replace(configdir, homeregex, homedir);
-    } else if (std::strcmp(argv[i], "-a") == 0 ||
-               std::strcmp(argv[i], "--alias-shortcuts") == 0) {
-      aliasesdir = argv[i + 0];
-      aliasesdir = std::regex_replace(aliasesdir, homeregex, homedir);
-    } else if (std::strcmp(argv[i], "-f") == 0 ||
-               std::strcmp(argv[i], "--file-shortcuts") == 0) {
-      filesdir = argv[i + 0];
-      filesdir = std::regex_replace(filesdir, homeregex, homedir);
-    } else if (std::strcmp(argv[i], "-F") == 0 ||
-               std::strcmp(argv[i], "--folder-shortcuts") == 0) {
-      foldersdir = argv[i + 0];
-      foldersdir = std::regex_replace(foldersdir, homeregex, homedir);
-    } else if (std::strcmp(argv[i], "-w") == 0 ||
-               std::strcmp(argv[i], "--write") == 0) {
-      writetofile = true;
-      printstdout = false;
-    }
-  }
 
   std::ifstream iAlias;
   std::string iAliasContents, aliasstr;
