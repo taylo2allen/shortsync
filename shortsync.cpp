@@ -48,7 +48,8 @@ int main(int argc, char **argv) {
       writetofile = true;
       printstdout = false;
     } else {
-      std::cout << "Error invalid flag\n\n";
+      std::cout << "shortsync error: unrecognized argument: " << argv[i]
+                << "\n";
       return 0;
     }
   }
@@ -92,7 +93,8 @@ int main(int argc, char **argv) {
   std::string iAliasContents, aliasstr;
   iAlias.open(aliasesdir);
   if (!iAlias.is_open()) {
-    std::cout << "Error opening alias shortcuts file!\n";
+    std::cout
+        << "shortsync read error:\nError while opening alias shortcuts file!";
     return 0;
   }
 
@@ -109,7 +111,8 @@ int main(int argc, char **argv) {
   std::string iFileContents, filestr;
   iFile.open(filesdir);
   if (!iFile.is_open()) {
-    std::cout << "Error opening file shortcuts file!\n";
+    std::cout
+        << "shortsync read error:\nError while opening file shortcuts file!";
     return 0;
   }
 
@@ -126,7 +129,8 @@ int main(int argc, char **argv) {
   std::string iFolderContents, folderstr;
   iFolder.open(foldersdir);
   if (!iFolder.is_open()) {
-    std::cout << "Error opening folder shortcuts file!\n";
+    std::cout << "shortsync read error:\nError while opening folder shortcuts "
+                 "file!";
     return 0;
   }
 
@@ -163,7 +167,8 @@ int main(int argc, char **argv) {
     if (writetofile) {
       shortcutfile.open(outputpath);
       if (!shortcutfile.is_open() && writetofile) {
-        std::cout << "Error while loading " << app->first
+        std::cout << "shortsync config error:\nError while loading "
+                  << app->first
                   << " outputpath field, an invalid path was loaded.";
         return 0;
       }
@@ -187,15 +192,15 @@ int main(int argc, char **argv) {
     }
 
     if (app->second["configpath"].as<std::string>() == "") {
-      std::cout << "Error while loading " << app->first
+      std::cout << "shortsync config error:\nError while loading " << app->first
                 << " missing required fields configpath.";
       return 0;
     } else if (app->second["sourcecmd"].as<std::string>() == "") {
-      std::cout << "Error while loading " << app->first
+      std::cout << "shortsync config error:\nError while loading " << app->first
                 << " missing required fields sourcecmd.";
       return 0;
     } else if (!iConfig.is_open()) {
-      std::cout << "Error while loading " << app->first
+      std::cout << "shortsync config error:\nError while loading " << app->first
                 << " config, an invalid path was loaded.";
       return 0;
     }
