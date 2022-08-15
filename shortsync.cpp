@@ -47,6 +47,9 @@ int main(int argc, char **argv) {
                std::strcmp(argv[i], "--write") == 0) {
       writetofile = true;
       printstdout = false;
+    } else {
+      std::cout << "Error invalid flag\n\n";
+      return 0;
     }
   }
 

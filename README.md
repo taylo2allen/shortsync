@@ -34,7 +34,7 @@ Load another config given the path.
 ### -w, --write
 Appends the source command field to the specified config file.
 
-### Configuration
+## Configuration
 ``` conf
 # alias_shortcuts
 s     shortsync
@@ -94,3 +94,7 @@ bash:
 ```
 
 [![Example](examples/example.svg)]()
+
+## Support
+Just a freelance programmer trying to make a living, everything is appreciated Thank You for the donation.
+[![Donate](https://img.shields.io/badge/Donate-$$$-9cf)](https://linktr.ee/taylo2allen)
