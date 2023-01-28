@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/shortsync.dir/shortsync.cpp.o -o shortsync  third-party/yaml-cpp/libyaml-cpp.a 

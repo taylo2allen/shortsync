@@ -1,3 +1,4 @@
+#include "yaml-cpp/yaml.h"
 #include <cstddef>
 #include <cstring>
 #include <fstream>
@@ -6,7 +7,7 @@
 #include <regex>
 #include <sstream>
 #include <string>
-#include <yaml-cpp/yaml.h>
+// #include "yaml-cpp/yaml.h"
 
 int main(int argc, char **argv) {
   std::string homedir = getenv("HOME");
@@ -178,12 +179,14 @@ int main(int argc, char **argv) {
     std::string iConfigContents;
     iConfig.open(configpath);
 
-    bool writesrc = true;
+    bool writesrc;
     // bool writesrc = false;
     std::regex configregex(sourcecmd);
     while (std::getline(iConfig, iConfigContents)) {
       if (std::regex_match(iConfigContents, configregex)) {
         writesrc = false;
+      } else {
+        writesrc = true;
       }
     }
 
