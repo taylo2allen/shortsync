@@ -19,7 +19,7 @@ To install from the AUR install the package shortsync-git.
 ### Pacman
 To install with pacman download the latest release then run the command:
 ```bash
-pacman -U shortsync-git-0.1.0-1-x86_64.pkg.tar.zst
+pacman -U shortsync-git-0.1.1-1-x86_64.pkg.tar.zst
 ```
 ### From Source
 To install from source run the command:
