@@ -1,4 +1,4 @@
-#include "yaml-cpp/yaml.h"
+#include "third-party/include/yaml-cpp/yaml.h"
 #include <cstddef>
 #include <cstring>
 #include <fstream>
@@ -7,7 +7,6 @@
 #include <regex>
 #include <sstream>
 #include <string>
-// #include "yaml-cpp/yaml.h"
 
 int main(int argc, char **argv) {
   std::string homedir = getenv("HOME");

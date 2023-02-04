@@ -2,11 +2,17 @@
 # shortsync
 ##
 
+# the compiler: gcc for C program, define as g++ for C++
+CC = g++
+
+# compiler flags:
+CFLAGS  = -Ithird-party/include/ -Lthird-party/lib/ -g -Wall -lyaml-cpp
+
+# The build target
 TARGET = shortsync
 
-build:
-	make -C build/ -k all
-	cp -nru build/shortsync bin/
+$(TARGET): $(TARGET).cpp
+	$(CC) $(CFLAGS) -o bin/$(TARGET) $(TARGET).cpp third-party/lib/libyaml-cpp.a
 
 clean:
 	sudo rm -f /usr/local/bin/$(TARGET)
@@ -16,8 +22,6 @@ clean:
 	sudo rm -f /usr/share/man/man1/$(TARGET).1.gz
 
 install: clean
-	make -C build/ -k all
-	cp -nru build/shortsync bin/
 	chmod 775 bin/$(TARGET)
 	chmod 644 LICENSE README.md $(TARGET).1
 	mkdir -p $(HOME)/.config/shortsync/shortcut-files && cp -nru config/* -t $(HOME)/.config/shortsync/

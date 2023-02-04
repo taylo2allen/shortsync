@@ -1,0 +1,11 @@
+prefix=/home/taylorallen/Scripts/AUR/shortsync/third-party
+exec_prefix=${prefix}
+includedir=/home/taylorallen/Scripts/AUR/shortsync/third-party/include
+libdir=/home/taylorallen/Scripts/AUR/shortsync/third-party/lib
+
+Name: Yaml-cpp
+Description: A YAML parser and emitter for C++
+Version: 0.7.0
+Requires:
+Libs: -L${libdir} -lyaml-cpp
+Cflags: -I${includedir}
