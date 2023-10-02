@@ -103,8 +103,10 @@ int main(int argc, char **argv) {
     if (std::regex_match(iAliasContents, commentregex)) {
       continue;
     }
-    aliaslinecount++;
-    aliasstr = aliasstr + iAliasContents + "\n";
+    else if (!iAliasContents.empty()) {
+      aliaslinecount++;
+      aliasstr = aliasstr + iAliasContents + "\n";
+    }
   }
 
   std::ifstream iFile;
@@ -112,7 +114,7 @@ int main(int argc, char **argv) {
   iFile.open(filesdir);
   if (!iFile.is_open()) {
     std::cout
-        << "shortsync read error:\nError while opening file shortcuts file!";
+      << "shortsync read error:\nError while opening file shortcuts file!";
     return 0;
   }
 
@@ -121,8 +123,10 @@ int main(int argc, char **argv) {
     if (std::regex_match(iFileContents, commentregex)) {
       continue;
     }
-    filelinecount++;
-    filestr = filestr + iFileContents + "\n";
+    else if (!iFileContents.empty()){
+      filelinecount++;
+      filestr = filestr + iFileContents + "\n";
+    }
   }
 
   std::ifstream iFolder;
@@ -130,7 +134,7 @@ int main(int argc, char **argv) {
   iFolder.open(foldersdir);
   if (!iFolder.is_open()) {
     std::cout << "shortsync read error:\nError while opening folder shortcuts "
-                 "file!";
+      "file!";
     return 0;
   }
 
@@ -139,8 +143,10 @@ int main(int argc, char **argv) {
     if (std::regex_match(iFolderContents, commentregex)) {
       continue;
     }
-    folderlinecount++;
-    folderstr = folderstr + iFolderContents + "\n";
+    else if (!iFolderContents.empty()){
+      folderlinecount++;
+      folderstr = folderstr + iFolderContents + "\n";
+    }
   }
 
   for (YAML::const_iterator app = config.begin(); app != config.end(); ++app) {
@@ -226,6 +232,8 @@ int main(int argc, char **argv) {
 
       std::string parsedalias;
       std::stringstream ssalias(aliasstr);
+
+      // aliasstr = std::regex_replace(aliasstr, std::regex("\n\n"), "");
 
       for (int i = 0; i < aliaslinecount; i++) {
         std::getline(ssalias, parsedalias);
