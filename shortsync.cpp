@@ -100,13 +100,11 @@ int main(int argc, char **argv) {
 
   int aliaslinecount = 0;
   while (std::getline(iAlias, iAliasContents)) {
-    if (std::regex_match(iAliasContents, commentregex)) {
+    if (std::regex_match(iAliasContents, commentregex) || iAliasContents.empty()) {
       continue;
     }
-    else if (!iAliasContents.empty()) {
-      aliaslinecount++;
-      aliasstr = aliasstr + iAliasContents + "\n";
-    }
+    aliaslinecount++;
+    aliasstr = aliasstr + iAliasContents + "\n";
   }
 
   std::ifstream iFile;
@@ -120,13 +118,11 @@ int main(int argc, char **argv) {
 
   int filelinecount = 0;
   while (std::getline(iFile, iFileContents)) {
-    if (std::regex_match(iFileContents, commentregex)) {
+    if (std::regex_match(iFileContents, commentregex) || iFileContents.empty()) {
       continue;
     }
-    else if (!iFileContents.empty()){
-      filelinecount++;
-      filestr = filestr + iFileContents + "\n";
-    }
+    filelinecount++;
+    filestr = filestr + iFileContents + "\n";
   }
 
   std::ifstream iFolder;
@@ -140,13 +136,11 @@ int main(int argc, char **argv) {
 
   int folderlinecount = 0;
   while (std::getline(iFolder, iFolderContents)) {
-    if (std::regex_match(iFolderContents, commentregex)) {
+    if (std::regex_match(iFolderContents, commentregex) || iFolderContents.empty()) {
       continue;
     }
-    else if (!iFolderContents.empty()){
-      folderlinecount++;
-      folderstr = folderstr + iFolderContents + "\n";
-    }
+    folderlinecount++;
+    folderstr = folderstr + iFolderContents + "\n";
   }
 
   for (YAML::const_iterator app = config.begin(); app != config.end(); ++app) {
